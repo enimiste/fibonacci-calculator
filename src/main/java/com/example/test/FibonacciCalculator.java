@@ -10,9 +10,9 @@ public interface FibonacciCalculator {
         RECURSIVE, TAIL_RECURSIVE, ITERATIVE, MATRIX, CLOSED_FORM;
     }
 
-    Long calculate(Integer n);
+    double calculate(Integer n);
 
-    static Long calculate(Integer n, Algo algo) {
+    static double calculate(Integer n, Algo algo) {
         return get(algo).calculate(n);
     }
 
@@ -38,8 +38,8 @@ public interface FibonacciCalculator {
 class RecursiveFibonacci implements FibonacciCalculator {
 
     @Override
-    public Long calculate(Integer n) {
-        if (n <= 1) return 1L;
+    public double calculate(Integer n) {
+        if (n <= 1) return 1;
         return calculate(n - 1) + calculate(n - 2);
     }
 }
@@ -48,11 +48,11 @@ class RecursiveFibonacci implements FibonacciCalculator {
 class TailRecursiveFibonacci implements FibonacciCalculator {
 
     @Override
-    public Long calculate(Integer n) {
+    public double calculate(Integer n) {
         return calculateHelper(n, 1, 1);
     }
 
-    private Long calculateHelper(Integer n, long prev, long cur) {
+    private double calculateHelper(Integer n, double prev, double cur) {
         if (n <= 1) return cur;
         return calculateHelper(n - 1, cur, prev + cur);
     }
@@ -62,11 +62,11 @@ class TailRecursiveFibonacci implements FibonacciCalculator {
 class IterativeFibonacci implements FibonacciCalculator {
 
     @Override
-    public Long calculate(Integer n) {
-        long prev = 1;
-        long cur = 1;
+    public double calculate(Integer n) {
+        double prev = 1;
+        double cur = 1;
         while (n > 1) {
-            long tmp = cur;
+            double tmp = cur;
             cur = prev + cur;
             prev = tmp;
             n--;
@@ -79,7 +79,7 @@ class IterativeFibonacci implements FibonacciCalculator {
 class MatrixFibonacci implements FibonacciCalculator {
 
     @Override
-    public Long calculate(Integer n) {
+    public double calculate(Integer n) {
         if (n <= 1) return 1L;
         Matrix A = new Matrix(new double[][]{
                 {1, 1},
@@ -93,7 +93,7 @@ class MatrixFibonacci implements FibonacciCalculator {
         });
 
         Matrix Fn = An.times(b);
-        return (long) Fn.get(0, 0);
+        return Fn.get(0, 0);
     }
 
     private Matrix matrixPower(Matrix A, Integer n) {
@@ -107,22 +107,18 @@ class MatrixFibonacci implements FibonacciCalculator {
         }
         return R;
     }
-
-    private void printMatrix(Matrix M) {
-        M.print(4, 0);
-    }
 }
 
 //O(1)
 class ClosedFormFibonacci implements FibonacciCalculator {
 
     @Override
-    public Long calculate(Integer n) {
-        if (n <= 1) return 1L;
+    public double calculate(Integer n) {
+        if (n <= 1) return 1;
         double sqrt5 = sqrt(5);
         double terme1 = pow((1 + sqrt5) / 2, n + 1);
         double terme2 = pow((1 - sqrt5) / 2, n + 1);
         double res = (1 / sqrt5) * (terme1 - terme2);
-        return (long) res;
+        return res;
     }
 }

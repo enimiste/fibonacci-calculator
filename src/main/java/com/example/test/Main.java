@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 
 import static com.example.test.FibonacciCalculator.Algo.*;
 import static com.example.test.FibonacciCalculator.calculate;
+import static java.lang.String.format;
 import static java.lang.System.in;
 import static java.lang.System.out;
 
@@ -16,8 +17,6 @@ public class Main {
     public static void main(String... args) {
         Scanner scanner = new Scanner(in);
         int n = 200;
-        long res = 0L;
-        out.println(Long.MAX_VALUE);
         show("Closed-Form : ", n, () -> calculate(n, CLOSED_FORM));
         show("Tail Recursive : ", n, () -> calculate(n, TAIL_RECURSIVE));
         show("Iterative : ", n, () -> calculate(n, ITERATIVE));
@@ -25,13 +24,13 @@ public class Main {
         show("Recursive : ", n, () -> calculate(n, RECURSIVE));
     }
 
-    private static void show(String prefix, int n, Supplier<Long> fn) {
+    private static void show(String prefix, int n, Supplier<Double> fn) {
         StopWatch watch = new StopWatch();
         watch.start();
-        Long res = fn.get();
+        Double res = fn.get();
         watch.stop();
         long timeMls = watch.getTime(TimeUnit.MILLISECONDS);
         long timeMcs = watch.getTime(TimeUnit.MICROSECONDS);
-        out.println(prefix + " Fib(" + n + ")=" + res + "  in " + timeMls + "ms (" + timeMcs + " microsec)");
+        out.printf("%s Fib(%d)=%.0f in %d ms (%d microsec)%n", prefix, n, res, timeMls, timeMcs);
     }
 }
