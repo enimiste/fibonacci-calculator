@@ -2,6 +2,7 @@
 This project was created to practice implementing differents approches to calculate the Fibonacci nth element. Then estimate the execution time of each method.
 The Long type was used as a return type of the calculator (Max value of Long is `9223372036854775807`)
 ## Technologies :
+- Java 11
 - JAMA for Matrix calculations 
 - JCommander for command line args handling
 - Stopwatch from apache-commons
